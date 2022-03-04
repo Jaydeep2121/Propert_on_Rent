@@ -1,0 +1,49 @@
+-- Procedure Creation
+CREATE OR ALTER PROCEDURE CheckLoginDetail
+@EmailId varchar(50),
+@Password varchar(20),
+@result varchar(20) OUTPUT
+AS
+BEGIN
+
+
+
+DECLARE @UserExist int;
+
+
+
+--Checking the user Exist or Not.
+SELECT @UserExist=count(*)
+FROM RegistrationDetail
+WHERE EmailId = @EmailId
+AND Password = @Password;
+
+
+
+--if User Exist then return their Role(Admin,Vendor,User) else return "Invalid Credential".
+if(@UserExist>0)
+SELECT @result=r.RoleName
+FROM RegistrationDetail reg,Roles r
+WHERE reg.EmailId=@EmailId
+AND reg.Password = @Password AND reg.RoleId=r.RoleId;
+else
+set @result = 'Invalid Credential';
+
+
+
+PRINT @result;
+RETURN;
+END
+GO
+
+
+
+--Calling Procedure with Valid Parameter
+DECLARE @Result Varchar(20)
+
+
+
+EXEC CheckLoginDetail
+@EmailId = 'sweta929@gmail.com',
+@Password = 'Sweta',
+@result = @Result OUTPUT;
