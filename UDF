@@ -1,0 +1,15 @@
+CREATE OR ALTER FUNCTION TotalBookingOnProperties(@PropertyId int)
+RETURNS int
+AS
+BEGIN
+DECLARE @TotalBooking int;
+
+SELECT @TotalBooking = COUNT(*) from Booking WHERE PropertyId = @PropertyId;
+RETURN @TotalBooking;
+END
+GO
+
+
+-- calling -- 
+
+PRINT TotalBookingOnProperties(1);
