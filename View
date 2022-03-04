@@ -1,0 +1,17 @@
+CREATE OR ALTER VIEW DisplayAllAmenetiesOfPropertyWise
+AS
+SELECT
+p.RegistrationId,
+p.PropertyId ,
+p.PropertyName ,
+a.AmenitesId,
+a.AmenitesName,
+pa.SubAmenitesId,
+sa.SubAmenitesName,
+pa.PropertyAmenitesId
+From Property p, Amenites a, SubAmenites sa, PropertyAmenites pa,RegistrationDetail reg
+WHERE p.RegistrationId = reg.RegistrationId AND
+sa.AmenitesId = a.AmenitesId AND
+p.PropertyId = pa.PropertyId AND
+pa.SubAmenitesId = sa.SubAmenitesName;
+GO
